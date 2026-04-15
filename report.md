@@ -4,11 +4,11 @@
 
 **Report your browser version, CPU type, cache size, RAM amount, and OS. We use this information to learn about the attack’s behavior on different machines.**
 
-- Browser:
-- CPU:
-- Cache sizes:
-- RAM:
-- OS:
+- Browser: Zen (Firefox)
+- CPU: intel core vpro i7
+- Cache sizes: 64 Bytes
+- RAM: 32GB
+- OS: Ubuntu
 
 
 
@@ -19,14 +19,14 @@
 
 | Number of Cache Lines | Median Access Latency (ms) |
 | --------------------- | -------------------------- |
-| 1                     |                            |
-| 10                    |                            |
-| 100                   |                            |
-| 1,000                 |                            |
-| 10,000                |                            |
-| 100,000               |                            |
-| 1,000,000             |                            |
-| 10,000,000            |                            |
+| 1                     |               0            |
+| 10                    |               0            |
+| 100                   |               0            |
+| 1,000                 |               0            | Start to see 1's show
+| 10,000                |               0            |
+| 100,000               |               1            |
+| 1,000,000             |               8            |
+| 10,000,000            |               82           |
 
 
 
@@ -34,6 +34,10 @@
 ## 1-3
 
 **According to your measurement results, what is the resolution of your `performance.now()`? In order to measure differences in time with `performance.now()``, approximately how many cache accesses need to be performed?**
+
+The resolution of performance.now() is 1 ms, which lines up with their experiments.
+
+The first non-zero median appears at N = 100,000 cache lines. There were a few times a 1 would show at 1,000 and 10,000. Therefore, approximately 100,000 cache accesses must be performed in a single timed region in order to produce a measurable, non-zero reading.
 
 
 
@@ -86,4 +90,3 @@
 ## 3-3
 
 **Compare your accuracy numbers between Part 2 and 3. Does the accuracy decrease in Part 3? Do you think that our “cache-occupancy” attack actually exploits a cache side channel? If not, take a guess as to possible root causes of the modified attack.**
-
