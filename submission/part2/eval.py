@@ -1,0 +1,45 @@
+import json
+import numpy as np
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
+
+def eval():
+    y_pred_full, y_test_full = [], []
+
+    # Re-train 10 times in order to reduce effects of randomness
+    for i in range(10):
+        with open("traces.out", "r") as f:
+            data = json.load(f)
+        X = np.array(data["traces"])
+        y = data["labels"]
+
+        ######################################################################################################
+        # AI GENERATED CODE - PROMPT: Split data into X_train, X_test, y_train, y_test with train_test_split #
+        ######################################################################################################
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=i
+        )
+
+        #########################################################################
+        # AI GENERATED CODE - PROMPT: Train classifier with X_train and y_train #
+        #########################################################################
+        clf = RandomForestClassifier(random_state=i)
+        clf.fit(X_train, y_train)
+        #########################
+        # END AI GENERATED CODE #
+        #########################
+
+        # 4. Use classifier to make predictions on X_test
+        y_pred = clf.predict(X_test)
+
+        # Do not modify the next two lines
+        y_test_full.extend(y_test)
+        y_pred_full.extend(y_pred)
+
+    # 5. Print classification report using y_test_full and y_pred_full
+    print(classification_report(y_test_full, y_pred_full))
+
+if __name__ == "__main__":
+    eval()
