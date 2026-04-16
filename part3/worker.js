@@ -21,7 +21,19 @@ function record() {
   // Save start timestamp
   start = performance.now();
 
-  // TODO (Exercise 3-1): Record data for 5 seconds and save values to T.
+  const N = 200000;
+
+  // For each of K slots, count how many full sweeps complete within P ms.
+  for (let k = 0; k < K; k++) {
+    const slotEnd = start + (k + 1) * P;
+    let sweeps = 0;
+    while (performance.now() < slotEnd) {
+      let sum = 0;
+      for (let i = 0; i < N; i++) sum += i;
+      sweeps++;
+    }
+    T[k] = sweeps;
+  }
 
   // Once done recording, send result to main thread
   postMessage(JSON.stringify(T));
